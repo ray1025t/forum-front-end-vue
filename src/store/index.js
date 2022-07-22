@@ -20,11 +20,41 @@ export default new Vuex.Store({
     setCurrentUser(state, currentUser) {
       state.currentUser = {
         ...state.currentUser,
-        // 將 API 取得的 currentUser 覆蓋掉 Vuex state 中的 currentUser
+        // 透過 API 取得的 currentUser
         ...currentUser
       }
-      // 將使用者的登入狀態改為 true
+
       state.isAuthenticated = true
+      state.token = localStorage.getItem('token')
+    },
+    revokeAuthentication(state) {
+      state.currentUser = {}
+      state.isAuthenticated = false
+      state.token = ''
+      localStorage.removeItem('token')
+    }
+  },
+  actions: {
+    async fetchCurrentUser({ commit }) {
+      try {
+        const { data } = await usersAPI.getCurrentUser()
+
+        const { id, name, email, image, isAdmin } = data
+
+        commit('setCurrentUser', {
+          id,
+          name,
+          email,
+          image,
+          isAdmin
+        })
+
+        return true
+      } catch (error) {
+        console.error(error.message)
+        commit('revokeAuthentication')
+        return false
+      }
     }
   },
   modules: {}
