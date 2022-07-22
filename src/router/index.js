@@ -54,6 +54,26 @@ const routes = [
     component: () => import ('../views/SignUp.vue')
   },
   {
+    path: '/admin',
+    exact: true,
+    redirect: '/admin/restaurants'
+  },
+  {
+    path: '/admin/restaurants',
+    name: 'admin-restaurants',
+    component: () => import('../views/AdminRestaurants.vue')
+  },
+  {
+    path: '/admin/restaurants/new',
+    name: 'admin-restaurant-new',
+    component: () => import('../views/NewAdminRestaurant.vue')
+  },
+  {
+    path: '/admin/restaurants/:id',
+    name: 'admin-restaurant',
+    component: () => import('../views/AdminRestaurant.vue')
+  },
+  {
     path: '*',
     name: 'not-fount',
     component: NotFound
