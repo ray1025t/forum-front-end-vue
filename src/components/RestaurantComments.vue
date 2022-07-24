@@ -1,16 +1,14 @@
 <template>
-  <div >
-    <h2 class="my-4">
-      所有評論：
-    </h2>
+  <div>
+    <h2 class="my-4">所有評論：</h2>
 
-    <div v-for=" comment in restaurantComments" :key=" comment.id">
+    <div v-for="comment in restaurantComments" :key="comment.id">
       <blockquote class="blockquote mb-0">
         <button
           type="button"
           class="btn btn-danger float-right"
           v-if="currentUser.isAdmin"
-           @click.stop.prevent="handleDeleteButtonClick(comment.id)"
+          @click.stop.prevent="handleDeleteButtonClick(comment.id)"
         >
           Delete
         </button>
@@ -19,51 +17,54 @@
             {{ comment.User.name }}
           </a>
         </h3>
-        <p> {{ comment.text }}</p>
+        <p>{{ comment.text }}</p>
         <footer class="blockquote-footer">
           {{ comment.createdAt | fromNow }}
         </footer>
       </blockquote>
-      <hr>
+      <hr />
     </div>
   </div>
 </template>
 
 
 <script>
-  /* eslint-disable */ 
-import { fromNowFilter } from './../utils/mixins'
-
-const dummyUser = {
-  currentUser: {
-    id: 1,
-    name: '管理者',
-    email: 'root@example.com',
-    image: 'https://i.pravatar.cc/300',
-    isAdmin: true
-  },
-  isAuthenticated: true
-}
+/* eslint-disable */
+import { fromNowFilter } from "./../utils/mixins";
+import { mapState } from "vuex";
+import commentsAPI from './../apis/comments'
+import { Toast } from './../utils/helpers'
 
 export default {
   mixins: [fromNowFilter],
   props: {
     restaurantComments: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
-    return {
-      currentUser: dummyUser.currentUser
-    }
+    return {};
+  },
+  computed: {
+    ...mapState(["currentUser", "isAuthenticated"]),
   },
   methods: {
     handleDeleteButtonClick(commentId) {
-      console.log('handeleDeleteButtonClick' , commentId)
-      this.$emit('after-delet-comment', commentId)
-    }
-  }
-   
-}
+      // try {
+      //   const { data } = await commentsAPI.removeComment({commentId})
+      //   if(data.status === 'error') {
+      //     throw new Error(data.message)
+      //   }
+      this.$emit("after-delet-comment", commentId);
+      // } catch(error) {
+      //   console.error(error.message)
+      //   Toast.fire({
+      //     icon: 'error',
+      //     title: '刪除失敗，請稍後再試'
+      //   })
+      // }
+    },
+  },
+};
 </script>

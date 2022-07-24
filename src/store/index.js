@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import usersAPI from './../apis/users'
 
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -23,39 +24,26 @@ export default new Vuex.Store({
         // 透過 API 取得的 currentUser
         ...currentUser
       }
-
       state.isAuthenticated = true
       state.token = localStorage.getItem('token')
     },
-    revokeAuthentication(state) {
-      state.currentUser = {}
-      state.isAuthenticated = false
-      state.token = ''
-      localStorage.removeItem('token')
-    }
   },
   actions: {
-    async fetchCurrentUser({ commit }) {
-      try {
+    async fetchCurrentUser() {
+      try{
         const { data } = await usersAPI.getCurrentUser()
-
         const { id, name, email, image, isAdmin } = data
-
-        commit('setCurrentUser', {
+        this.commit('setCurrentUser', {
           id,
           name,
           email,
           image,
           isAdmin
         })
-
-        return true
       } catch (error) {
-        console.error(error.message)
-        commit('revokeAuthentication')
-        return false
+        console.log('error', error)
+        console.error('can not fetch user information')
       }
     }
-  },
-  modules: {}
+  }
 })

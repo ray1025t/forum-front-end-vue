@@ -27,19 +27,41 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from "uuid"
-
+import { Toast } from './../utils/helpers'
+import commentsAPI from './../apis/comments'
 export default {
   methods: {
-    handleSubmit() {
-      // TODO：向 API 請求POST
-      // 伺服器新增Comment 成功後...
+    async handleSubmit() {
+      try {
+      if(!this.text) {
+          Toast.fire({
+            icon: 'warning',
+            title: '您尚未填寫任何評論'
+          })
+          return
+        }
+      const { data } = await commentsAPI.addComment({
+        restaurantId: this.restaurantId,
+        text: this.text
+      })
+      console.log(data)
+      if (data.status === 'error') {
+        throw new Error(data.message)
+      }
       this.$emit('after-create-comment' , {
-        commentId: uuidv4(),   // 尚尚未串接API，暫時使用uuid
+        commentId: data.restaurantId,   
         restaurantId: this.restaurantId,
         text: this.text   
       })
       this.text = ''
+      } catch(error) {
+        console.error(error.message)
+        Toast.fire({
+          icon: 'error',
+          title: '新增失敗，請稍後再試'
+        })
+      }
+      
     }
   },
   data() {
