@@ -36,7 +36,7 @@ export default {
       if(!this.text) {
           Toast.fire({
             icon: 'warning',
-            title: '尚未填寫任何評論'
+            title: '尚未填寫評論'
           })
           return
         }
