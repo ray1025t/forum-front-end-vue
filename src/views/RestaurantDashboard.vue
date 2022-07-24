@@ -37,7 +37,8 @@ export default {
         categoryName: '',
         commentsLength: 0,
         vuewCounts: 0,
-      }
+      },
+      isLoading: true,
     }
   },
   methods: {
@@ -56,7 +57,7 @@ export default {
           commentsLength: Comments.length,
           viewCounts,
         }
-
+        this.isLoading = false
       } catch(error) {
         console.error(error.message)
         Toast.fire({
