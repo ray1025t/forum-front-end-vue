@@ -43,12 +43,12 @@
         </button>
         <button type="button" class="btn btn-danger like mr-2" 
         v-if="restaurant.isLiked"
-        @click.prevent.stop="deleteLiked(restaurant.id)">
+        @click.prevent.stop="deleteLike(restaurant.id)">
           Unlike
         </button>
         <button type="button" class="btn btn-primary like mr-2" 
         v-else
-        @click.prevent.stop="addLiked(restaurant.id)">
+        @click.prevent.stop="addLike(restaurant.id)">
           Like
         </button>
       </div>
@@ -110,9 +110,9 @@ export default {
         console.log('error', error)
       }
     },
-    async addLiked(restaurantId) {
+    async addLike(restaurantId) {
       try {
-        const { data } = await usersAPI.addLiked({ restaurantId })
+        const { data } = await usersAPI.addLike({ restaurantId })
 
         if (data.status !== 'success') {
           throw new Error(data.message)
@@ -129,9 +129,9 @@ export default {
         console.log('error', error)
       }
     },
-    async deleteLiked(restaurantId) {
+    async deleteLike(restaurantId) {
      try {
-        const { data } = await usersAPI.deleteLiked({ restaurantId })
+        const { data } = await usersAPI.deleteLike({ restaurantId })
 
         if (data.status !== 'success') {
           throw new Error(data.message)
@@ -151,3 +151,35 @@ export default {
   },
 };
 </script>
+
+
+<style scoped>
+.badge.badge-secondary {
+  padding: 0;
+  margin: 8px 0;
+  color: #bd2333;
+  background-color: transparent;
+}
+
+.btn,
+.btn-border.btn:hover {
+  margin: 7px 14px 7px 0;
+}
+
+.card {
+  margin-bottom: 2rem !important;
+}
+.card-img-top {
+  background-color: #EFEFEF;
+}
+
+.card-body {
+  padding: 17.5px;
+}
+
+.card-footer {
+  padding: 9px 17.5px;
+  border-color: rgb(232, 232, 232);
+  background: white;
+}
+</style>

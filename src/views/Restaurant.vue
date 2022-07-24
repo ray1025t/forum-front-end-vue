@@ -109,6 +109,8 @@ export default {
       this.restaurantComments = this.restaurantComments.filter(
         (comment) => comment.id !== commentId
       );
+
+        console.log('delete restaurantComments',this.restaurantComments)
       } catch(error) {
         console.error(error.message)
         Toast.fire({

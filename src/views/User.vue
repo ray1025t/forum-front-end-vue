@@ -71,6 +71,7 @@ export default {
   created () {
     const { id } = this.$route.params
     this.fetchUser(id)
+    this.testUser(id)
   },
   beforeRouteUpdate (to, from, next) {
     const { id } = to.params
@@ -81,6 +82,8 @@ export default {
     async fetchUser (userId) {
       try {
         const { data } = await usersAPI.get({ userId })
+        console.log(data)
+        console.log('hi')
         if (data.status === 'error') {
           throw new Error(data.message)
         }
@@ -123,6 +126,20 @@ export default {
           icon: 'error',
           title: '無法取得使用者資料，請稍後再試'
         })
+      }
+    },
+    async  testUser(userId) {
+      try {
+        const { data } = await usersAPI.get({userId})
+        // console.log(data)
+        // const response = await usersAPI.get({userId})
+        // console.log('response',response)
+         if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+        console.log(userId)
+      } catch(error) {
+        console.error(error.message)
       }
     }
   }

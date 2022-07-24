@@ -36,7 +36,7 @@ export default {
       if(!this.text) {
           Toast.fire({
             icon: 'warning',
-            title: '您尚未填寫任何評論'
+            title: '尚未填寫任何評論'
           })
           return
         }
@@ -78,3 +78,9 @@ export default {
   
 }
 </script>
+
+<style scoped>
+.form-group {
+  margin: 21px 0 8px;
+}
+</style>

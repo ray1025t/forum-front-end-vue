@@ -23,9 +23,9 @@
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h5 class="card-title">
+            <router-link class="card-title" :to="{ name: 'restaurant', params: {id: restaurant.id } }">
               {{ restaurant.name }}
-            </h5>
+            </router-link>
             <span class="badge badge-secondary">收藏數：{{ restaurant.FavoriteCount }}</span>
             <p class="card-text">
               {{  restaurant.description }}
