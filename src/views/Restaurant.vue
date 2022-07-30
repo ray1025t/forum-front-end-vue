@@ -57,6 +57,8 @@ export default {
     this.fetchRestaurant(restaurantId);
   },
   beforeRouteUpdate(to, from, next) {
+    console.log(to)
+    console.log(from)
     const { id: restaurantId } = to.params;
     this.fetchRestaurant(restaurantId);
     next();

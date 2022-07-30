@@ -70,7 +70,8 @@ export default {
           prev,
           next
         } = response.data
-
+        console.log(response)
+        console.log('hi')
         this.restaurants = restaurants
         this.categories = categories
         this.categoryId = categoryId

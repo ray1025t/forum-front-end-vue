@@ -40,19 +40,21 @@ export default {
           })
           return
         }
+
       const { data } = await commentsAPI.addComment({
-        restaurantId: this.restaurantId,
-        text: this.text
-      })
-      console.log(data)
-      if (data.status === 'error') {
-        throw new Error(data.message)
-      }
+          restaurantId: this.restaurantId,
+          text: this.text
+        })
+
+       if (data.status === 'error') {
+          throw new Error(data.message)
+        }
       this.$emit('after-create-comment' , {
-        commentId: data.restaurantId,   
+        commentId: data.commentId,   
         restaurantId: this.restaurantId,
         text: this.text   
       })
+
       this.text = ''
       } catch(error) {
         console.error(error.message)
@@ -66,7 +68,8 @@ export default {
   },
   data() {
     return {
-      text: ''
+      text: '',
+      isProcessing: false
     }
   },
   props: {

@@ -82,6 +82,12 @@ const routes = [
     
   },
   {
+    path: '/admin/users',
+    name: 'admin-users',
+    component: () => import('../views/AdminUsers.vue'),
+    beforeEnter: authorizeIsAdmin
+  },
+  {
     path: '/admin/restaurants',
     name: 'admin-restaurants',
     component: () => import('../views/AdminRestaurants.vue'),
